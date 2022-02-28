@@ -1,0 +1,282 @@
+<html>
+<head>
+	<title></title>
+</head>
+<style>
+body{
+	font-family: calibri,tahoma,calibri;
+}
+#outter{
+	width: 100%;
+	height: 100%;
+	background-color: #fff;
+	margin: auto;
+}
+#changeText2{
+	width: 20%;
+	font-size: 45px;
+	font-family: tahoma,calibri;
+	font-weight:bold;
+	#background-color: blue;
+	position: absolute;
+	top: 25%;
+	left: 40%;
+	transoform:translate:(-10%,-10%);
+}
+
+table{
+	width: 85%;
+	border: solid 1px #fff;
+}
+
+#draw {
+
+
+}
+
+
+select {
+  /* styling */
+  background-color: white;
+  border: thin solid #A6A6A6;
+  border-radius: 3px;
+  display: inline-block;
+  font: inherit;
+  line-height: 1.5em;
+  padding: 0.5em 3.5em 0.5em 1em;
+
+  /* reset */
+
+  margin: 0;      
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+
+select.classic {
+  background-image:
+    linear-gradient(45deg, transparent 50%, blue 50%),
+    linear-gradient(135deg, blue 50%, transparent 50%),
+    linear-gradient(to right, #EF7727, #EF7727);
+  background-position:
+    calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px),
+    100% 0;
+  background-size:
+    5px 5px,
+    5px 5px,
+    2.5em 2.5em;
+  background-repeat: no-repeat;
+}
+
+select.classic:focus {
+  background-image:
+    linear-gradient(45deg, white 50%, transparent 50%),
+    linear-gradient(135deg, transparent 50%, white 50%),
+    linear-gradient(to right, gray, gray);
+  background-position:
+    calc(100% - 15px) 1em,
+    calc(100% - 20px) 1em,
+    100% 0;
+  background-size:
+    5px 5px,
+    5px 5px,
+    2.5em 2.5em;
+  background-repeat: no-repeat;
+  border-color: grey;
+  outline: 0;
+}
+
+select.round {
+  background-image:
+    linear-gradient(45deg, transparent 50%, gray 50%),
+    linear-gradient(135deg, gray 50%, transparent 50%),
+    radial-gradient(#ddd 70%, transparent 72%);
+  background-position:
+    calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px),
+    calc(100% - .5em) .5em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1.5em 1.5em;
+  background-repeat: no-repeat;
+}
+
+select.round:focus {
+  background-image:
+    linear-gradient(45deg, white 50%, transparent 50%),
+    linear-gradient(135deg, transparent 50%, white 50%),
+    radial-gradient(gray 70%, transparent 72%);
+  background-position:
+    calc(100% - 15px) 1em,
+    calc(100% - 20px) 1em,
+    calc(100% - .5em) .5em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1.5em 1.5em;
+  background-repeat: no-repeat;
+  border-color: green;
+  outline: 0;
+}
+
+a.button1{
+	width: 150px;
+	display:inline-block;
+	padding:0.45em 1.2em;
+	line-height: 1.5em;
+	border:0.1em solid #A6A6A6;
+	#margin:0 0.3em 0.3em 0;
+	border-radius:0.12em;
+	box-sizing: border-box;
+	text-decoration:none;
+	font-family: calibri,tahoma,'Roboto',sans-serif;
+	font-weight:300;
+	color:#A6A6A6;
+	text-align:center;
+	transition: all 0.2s;
+}
+a.button1:hover{
+	color:#000000;
+	background-color:#FFFFFF;
+}
+@media all and (max-width:30em){
+	.button1{
+		display:block;
+		margin:0.4em auto;
+	}
+}
+.bouncy{
+	animation:bouncy 5s infinite linear;
+	position:relative;
+}
+@keyframes bouncy {
+	0%{top:0em}
+	40%{top:0em}
+	43%{top:-0.9em}
+	46%{top:0em}
+	48%{top:-0.4em}
+	50%{top:0em}
+	100%{top:0em;}
+}
+
+/* The alert message box */
+.alert {
+  padding: 20px;
+  background-color: #f44336; /* Red */
+  color: white;
+  margin-bottom: 15px;
+}
+
+/* The close button */
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+  color: black;
+}
+</style>
+<body>
+<center>
+<div id="outter">
+	<div class="alert"><span id="message">&nbsp;</span></div>
+	<div id="changeText2">
+		<div id="changeText"></div>
+		<table border="0">
+			<tr>
+				<td colspan="2">&nbsp;</td>
+			</tr>
+			<tr>
+				<td>
+					<select class="classic" id="tier">
+						<option value=''>SELECT TIER</option>
+						<option value='1'>1</option>
+						<option value='2'>2</option>
+						<option value='3'>3</option>
+					</select>
+				</td>
+				<td><a href="#" class="button1 bouncy" id="draw" onclick="run_draw();">RUN DRAW</a></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><a href="#" class="button1 bouncy"id="details" style="display:none">GET DETAILS</a></td>
+			</tr>
+		</table>
+	</div>
+</div>
+<center>
+</body>
+<script>
+var text = ["AD_SML9QHO","AD_4CNHE1O","AD_HGJRR2O","AD_EQX8J4O","AD_J28IRSO","AD_UUE8ICO","AD_T69JKYO","AD_2SOICQO","AD_CWHQQZO","AD_MXYBCQO","AD_M2SF8IO","AD_84QIS3O","AD_UB5BHJO","AD_C5QJ55O","AD_Z85LHZO","AD_1A2HXVO","AD_77LVI0O","AD_3Z13CXO","AD_PWRWX0O","AD_WY5A5LO"];
+var counter = 0;
+var elem = document.getElementById("changeText");
+/*
+-.pick draw winner.
+*/
+function get_winner() {
+  //var inst = setInterval(100);
+  elem.innerHTML = text[counter];
+  counter++;
+  if (counter >= text.length) {
+    //counter = 0;
+    //clearInterval(inst); // uncomment this if you want to stop refreshing after one cycle
+	elem.innerHTML = '000000';
+  } 
+}
+/*
+-.method run draw.
+*/
+function run_draw(){ 
+	var response = validate_select();
+	if(response == true){
+		var select_option = document.getElementById("tier");
+		console.log(select_option.value);
+		setInterval(get_winner, 100);
+		//data_handler(select_option.value);
+	}else{
+		var message = document.getElementById("message");
+		message.innerHTML = 'Tier has to be checked.';
+	}
+	//var inst = setInterval(change, 100);
+	 //console.log(counter);
+	 //elem.innerHTML = text[counter];
+}
+/*
+validate html select. 
+*/
+function validate_select(){
+	var bool = false;
+	var select_option = document.getElementById("tier");
+	var message = document.getElementById("message");
+	//message.innerHTML = 'Tier has to be checked.';
+	if(select_option.value != "" && select_option.value.length > 0) {
+		bool = true;
+	}
+	return bool;
+}
+
+function data_handler(data){
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", 'https://c914-41-139-151-158.ngrok.io/getFinalDrawWinner/', true);
+	//xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+	xhr.setRequestHeader('Content-length', data.length);
+	xhr.setRequestHeader('Connection', 'close');
+	xhr.send(JSON.stringify({
+		tier: data
+	}));
+}
+</script>
+</html>
