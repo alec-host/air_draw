@@ -97,7 +97,7 @@
 					listAction: 'entries_fetch.php?action=list&jtStartIndex=0&jtPageSize=10&jtSorting=null',
 					/*createAction: 'entries_fetch.php?action=create',*/
 					/*updateAction: 'entries_fetch.php?action=update',*/
-					deleteAction: 'entries_fetch.php?action=delete'
+					/*deleteAction: 'entries_fetch.php?action=delete'*/
 				},
 				fields: {
 						_Id: {
@@ -125,7 +125,7 @@
 							}
 						},
 						name: {
-							title: 'Identifier',
+							title: 'Name',
 							width: '10%',
 							create: true,
 							edit: true,
@@ -225,7 +225,7 @@
 			<div class="filtering" >
 				<form>
 					<span>&nbsp;</span><input type="text" name="word" id="word" style="" placeholder=" TYPE MSISDN TO SEARCH..."/>
-					<button type="submit" id="LoadRecordsButton" class="btn2">&nbsp;&nbsp;</button>
+					<button type="submit" id="LoadRecordsButton" class="btn2">&nbsp;Search&nbsp;</button>
 				</form>
 			</div>
 		</div>

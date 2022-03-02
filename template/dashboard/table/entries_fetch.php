@@ -1,8 +1,7 @@
 <?php
-session_start();
 
 require_once('include/function.php');
-
+#http://localhost/draw/dashboard/table/entries_fetch.php?action=list&jtStartIndex=0&jtPageSize=10&jtSorting=null&jtStartIndex=0&jtPageSize=50
 try
 {
 	#-.Getting records (listAction)
@@ -16,9 +15,9 @@ try
 					$searchFilter = "0";
 			}
 
-			$apiUrl = 'http://127.0.0.1:8000/getCustomerEntries/';
+			$apiUrl = 'https://c914-41-139-151-158.ngrok.io/getCustomerEntries/';
 
-			$result = _curlGetToApi($apiUrl,$searchFilter,'0',$_GET['jtPageSize']);
+			$result = curlToPythonApi($apiUrl,$searchFilter);
 
 			print($result);
 

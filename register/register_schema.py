@@ -19,7 +19,7 @@ class CreateAndUpdateCustomerEntries(BaseModel):
 	ticket_no: Optional[float] = 0.00
 	amount: Optional[float] = 0.00
 	package: str
-	tier: str
+	tier: Optional[str] = 0
 	date_created: Optional[str] = date
 	date_modified: Optional[str] = date
 	is_archived: Optional[int] = 0

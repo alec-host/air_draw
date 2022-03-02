@@ -17,8 +17,8 @@ from entries_model import DrawManifestDescription
 date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 #-.method: get entries based on package.
-def _get_entries(session: Session,_tier,_package,_amount):
-	draw_entries = session.query(DrawManifestDescription.entries,DrawManifestDescription.tier).filter_by(tier=_tier,package=_package,cost=_amount).first()
+def _get_entries(session: Session,_package,_amount):
+	draw_entries = session.query(DrawManifestDescription.entries,DrawManifestDescription.tier).filter_by(package=_package,cost=_amount).first()
 	if(draw_entries is None):
 		return None
 	else:

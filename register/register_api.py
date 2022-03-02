@@ -27,6 +27,7 @@ db_mgt_1 = DatabaseManager(conn.config.MYSQL_DBASE)
 class CustomerEntriesAccount:
 
 	"""
+	changes on register_api & entries_crud
 	@register_router.on_event('startup')
 	async def startup_event():
 		await redis_cache.init_redis_cache()
@@ -43,7 +44,7 @@ class CustomerEntriesAccount:
 	async def _record_customer_entries(self,customer_info: CreateAndUpdateCustomerEntries):
 		try:
 			#-.method call.
-			draw_configs = _get_entries(self.session_1,customer_info.tier,customer_info.package,customer_info.amount)
+			draw_configs = _get_entries(self.session_1,customer_info.package,customer_info.amount)
 			if(draw_configs is not None):
 				#-.method call.
 				response = _customer_payment_details(self.session_1,customer_info,draw_configs[0],draw_configs[1])
