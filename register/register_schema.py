@@ -32,6 +32,9 @@ class CreateAndUpdateDrawManifest(BaseModel):
 	tier: Optional[int] = 0
 	is_deleted: Optional[int] = 0
 	
+class SearchValidationStub(BaseModel):
+	search: str
+	
 class UserCustomerEntries(CreateAndUpdateCustomerEntries):
     msisdn: str
 

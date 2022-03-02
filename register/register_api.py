@@ -9,7 +9,7 @@ from fastapi import APIRouter,Depends,HTTPException
 from fastapi_utils.cbv import cbv
 from sqlalchemy.orm import Session
 from register_crud import _customer_payment_details,_customer_entries
-from register_schema import CreateAndUpdateCustomerEntries
+from register_schema import CreateAndUpdateCustomerEntries,SearchValidationStub
 
 import conn.config
 sys.path.insert(0,conn.config.ENTRIES_DIR)
@@ -39,7 +39,7 @@ class CustomerEntriesAccount:
 	session_1: Session = Depends(db_mgt_1.get_db)
 
 	#-.create customer wdraw entries.
-	@register_router.post("/createCustomerEntry/0")
+	@register_router.post("/createCustomerEntry/")
 	async def _record_customer_entries(self,customer_info: CreateAndUpdateCustomerEntries):
 		try:
 			#-.method call.
@@ -58,17 +58,18 @@ class CustomerEntriesAccount:
 			raise HTTPException(**ex.__dict__)
 			
 	#-.get customer draw entries.
-	@register_router.get("/getCustomerEntries/")
-	async def _get_customer_entries(self,_msisdn: str):
+	@register_router.post("/getCustomerEntries/")
+	async def _get_customer_entries(self,search_input: SearchValidationStub):
 		try:
 			_limit = 1000
 			#-.method call.
-			entries = _customer_entries(self.session_1,_msisdn,_limit)
-		
+			print('j=here to the world' + str(search_input.search))
+			entries = _customer_entries(self.session_1,search_input.search,_limit)
 			if (len(entries) > 0):
 				#return {"ERROR":"0","RESULT":"SUCCESS","DATA":entries,"MESSAGE":"Customer draw entries recorded successful."}
 				return {"Result":"OK","Records":entries,"TotalRecordCount":len(entries)}
 			else:
-				return {"ERROR":"1","RESULT":"FAIL","MESSAGE":"No customer entries."}
+				#return {"ERROR":"1","RESULT":"FAIL","MESSAGE":"No customer entries."}
+				return {"Result":"OK","Records":[],"TotalRecordCount":0}
 		except Exception as ex:
 			raise HTTPException(**ex.__dict__)
