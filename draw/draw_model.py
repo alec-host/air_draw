@@ -1,7 +1,6 @@
 '''
 @author: alec_host
 '''
-
 import sys
   
 from sqlalchemy.schema import Column

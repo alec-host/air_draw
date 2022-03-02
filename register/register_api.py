@@ -1,7 +1,6 @@
 '''
 @author: alec_host
 '''
-
 import sys
 import aiohttp
 import requests
@@ -9,7 +8,7 @@ import requests
 from fastapi import APIRouter,Depends,HTTPException
 from fastapi_utils.cbv import cbv
 from sqlalchemy.orm import Session
-from register_crud import _customer_payment_details
+from register_crud import _customer_payment_details,_customer_entries
 from register_schema import CreateAndUpdateCustomerEntries
 
 import conn.config
@@ -39,19 +38,37 @@ class CustomerEntriesAccount:
 
 	session_1: Session = Depends(db_mgt_1.get_db)
 
-	#-.create customer wallet.
-	@register_router.post("/createCustomerEntry/")
+	#-.create customer wdraw entries.
+	@register_router.post("/createCustomerEntry/0")
 	async def _record_customer_entries(self,customer_info: CreateAndUpdateCustomerEntries):
 		try:
 			#-.method call.
-			draw_entries = _get_entries(self.session_1,customer_info.tier,customer_info.package,customer_info.amount)
-			#-.loop upto no of entries.
-			#-.method call.
-			response = _customer_payment_details(self.session_1,customer_info,draw_entries)
+			draw_configs = _get_entries(self.session_1,customer_info.tier,customer_info.package,customer_info.amount)
+			if(draw_configs is not None):
+				#-.method call.
+				response = _customer_payment_details(self.session_1,customer_info,draw_configs[0],draw_configs[1])
 			
-			if (response is not None):
-				return {"ERROR":"0","RESULT":"SUCCESS","MESSAGE":"Customer draw entries recorded successful."}
+				if (response is not None):
+					return {"ERROR":"0","RESULT":"SUCCESS","MESSAGE":"Customer draw entries recorded successful."}
+				else:
+					return {"ERROR":"1","RESULT":"FAIL","MESSAGE":"Customer has existing draw entries."}
 			else:
-				return {"ERROR":"1","RESULT":"FAIL","MESSAGE":"Customer has existing draw entries."}
+				return {"ERROR":"1","RESULT":"FAIL","MESSAGE":"Something wrong happened. Check tbl_draw_manifest"}
+		except Exception as ex:
+			raise HTTPException(**ex.__dict__)
+			
+	#-.get customer draw entries.
+	@register_router.get("/getCustomerEntries/")
+	async def _get_customer_entries(self,_msisdn: str):
+		try:
+			_limit = 1000
+			#-.method call.
+			entries = _customer_entries(self.session_1,_msisdn,_limit)
+		
+			if (len(entries) > 0):
+				#return {"ERROR":"0","RESULT":"SUCCESS","DATA":entries,"MESSAGE":"Customer draw entries recorded successful."}
+				return {"Result":"OK","Records":entries,"TotalRecordCount":len(entries)}
+			else:
+				return {"ERROR":"1","RESULT":"FAIL","MESSAGE":"No customer entries."}
 		except Exception as ex:
 			raise HTTPException(**ex.__dict__)

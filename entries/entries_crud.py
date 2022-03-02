@@ -1,7 +1,6 @@
 '''
 @author: alec_host
 '''
-
 import sys
 import uuid
 
@@ -13,12 +12,14 @@ from sqlalchemy.orm import Session
 import conn.config
 sys.path.insert(0,conn.config.ENTRIES_DIR)
 from entries_schema import CreateAndUpdateDrawEntries
-from entries_model import DrawEntriesDescription
+from entries_model import DrawManifestDescription
 
 date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 #-.method: get entries based on package.
-def _get_entries(session: Session,months,package,amount):
-	draw_entries = session.query(DrawEntriesDescription.entries).filter_by(period_in_months=months,package=package,cost=amount).first()
-	
-	return draw_entries['entries']
+def _get_entries(session: Session,_tier,_package,_amount):
+	draw_entries = session.query(DrawManifestDescription.entries,DrawManifestDescription.tier).filter_by(tier=_tier,package=_package,cost=_amount).first()
+	if(draw_entries is None):
+		return None
+	else:
+		return draw_entries['entries'],draw_entries['tier']
