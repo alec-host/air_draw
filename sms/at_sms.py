@@ -13,8 +13,18 @@ class AT:
 		if _msisdn is None:
 			# don't send my own messages
 			return
+
+		if(_name is not None or _name.strip() != ""):
+			_first_name = _name.split(" ")[0].strip()
+		else:
+			_first_name = "User"
+		
+		if(int(_entries) > 0):
+			inner_text = "entries"
+		else:
+			inner_text = "entry"
 			
-		message = conn.config.TEMPLATE_MESSAGE.replace('{0}',str(_name)).replace('{1}',str(_entries))
+		message = conn.config.TEMPLATE_MESSAGE.replace('{0}',str(_first_name)).replace('{1}',str(_entries)).replace('{2}',inner_text)
 	
 		headers = {
 			'apiKey' : conn.config.AT_SMS_KEY,
@@ -34,7 +44,3 @@ class AT:
 		response = requests.post(conn.config.AT_ENDPOINT,data=payload,headers=headers)	
 		
 		return response
-		#connector = aiohttp.TCPConnector(verify_ssl=False)
-		#asyncio.ensure_future(
-		#aiohttp.request('post', url, data = payload, headers = headers, connector=connector)
-		#).add_done_callback(lambda future: future.result()) 
