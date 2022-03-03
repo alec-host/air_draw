@@ -15,7 +15,7 @@ class AT:
 			return
 
 		if(_name is not None or _name.strip() != ""):
-			_first_name = _name.split(" ")[0].strip()
+			_first_name = _name.split(" ")[0].strip().capitalize()[0:15]
 		else:
 			_first_name = "User"
 		
