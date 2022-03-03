@@ -9,7 +9,7 @@ from sqlalchemy.types import String, Integer, Float, DateTime
 import conn.config
 sys.path.insert(0,conn.config.CONNECT_DIR)
 
-from database import Base
+from conn.database import Base
 
 class DrawFinalPoolEntriesDescription(Base):
 	__tablename__ = "tbl_draw_entries"

@@ -1,7 +1,6 @@
 '''
 @author: alec_host
 '''
-
 import sys
 import aiohttp
 import requests
@@ -12,8 +11,8 @@ from sqlalchemy.orm import Session
 from draw_crud import _draw_winner,_get_winner_info,_record_winner
 from draw_schema import CreateAndUpdateDrawFinalPoolEntries
 
-from database import DatabaseManager
-from redis_wrapper import RedisCache
+from conn.database import DatabaseManager
+from conn.redis_wrapper import RedisCache
 
 import conn.config
 

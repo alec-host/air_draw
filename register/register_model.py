@@ -8,7 +8,7 @@ from sqlalchemy.types import String, Integer, Float, DateTime
 
 import conn.config
 sys.path.insert(0,conn.config.CONNECT_DIR)
-from database import Base
+from conn.database import Base
 
 class CustomerEntriesDescription(Base):
 

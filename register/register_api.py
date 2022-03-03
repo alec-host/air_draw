@@ -15,8 +15,10 @@ import conn.config
 sys.path.insert(0,conn.config.ENTRIES_DIR)
 from entries_crud import _get_entries
 
-from database import DatabaseManager
-from redis_wrapper import RedisCache
+from conn.database import DatabaseManager
+from conn.redis_wrapper import RedisCache
+
+from sms.at_sms import AT
 
 redis_cache = RedisCache()
 register_router = APIRouter()
@@ -27,7 +29,7 @@ db_mgt_1 = DatabaseManager(conn.config.MYSQL_DBASE)
 class CustomerEntriesAccount:
 
 	"""
-	changes on register_api & entries_crud
+	changes on register_api & 
 	@register_router.on_event('startup')
 	async def startup_event():
 		await redis_cache.init_redis_cache()
@@ -48,8 +50,9 @@ class CustomerEntriesAccount:
 			if(draw_configs is not None):
 				#-.method call.
 				response = _customer_payment_details(self.session_1,customer_info,draw_configs[0],draw_configs[1])
-			
 				if (response is not None):
+					at = AT()
+					resp = await at._send_message(customer_info.name,draw_configs[0],customer_info.msisdn)				
 					return {"ERROR":"0","RESULT":"SUCCESS","MESSAGE":"Customer draw entries recorded successful."}
 				else:
 					return {"ERROR":"1","RESULT":"FAIL","MESSAGE":"Customer has existing draw entries."}

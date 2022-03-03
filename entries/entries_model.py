@@ -3,12 +3,12 @@
 '''
 import sys
 
-import config
+import conn.config
   
 from sqlalchemy.schema import Column
 from sqlalchemy.types import String, Integer, Float, DateTime
-sys.path.insert(0,config.CONNECT_DIR)
-from database import Base
+sys.path.insert(0,conn.config.CONNECT_DIR)
+from conn.database import Base
 
 class DrawManifestDescription(Base):
 	__tablename__ = "tbl_draw_manifest"

@@ -5,7 +5,7 @@
 import logging
 import aioredis
 
-import config
+import conn.config
 
 from typing import Optional
 from aioredis import Redis,create_redis_pool
@@ -21,7 +21,7 @@ class RedisCache():
     
     #-.init cache.
     async def init_redis_cache(self):
-       self.redis_cache = await create_redis_pool((config.REDIS_HOST,config.REDIS_PORT),db=0,password=config.REDIS_PASS)
+       self.redis_cache = await create_redis_pool((conn.config.REDIS_HOST,conn.config.REDIS_PORT),db=0,password=conn.config.REDIS_PASS)
     
     async def keys(self,pattern):
         return await self.redis_cache.keys(pattern)
@@ -45,7 +45,7 @@ class RedisCache():
 
     #-.redis key.
     def _store(self):
-        return [config.OOWALLET_BAL_KEY,config.OOPORTFOLIO_KEY,config.OOASSET_STMT_KEY,config.OOLOAN_STMT_KEY,config.OOWALLET_STMT_KEY,config.OOSHOP_LIST_KEY,config.OOASSET_LIST_KEY,config.OOPUSH_MESSAGE_KEY]
+        return [conn.config.OOWALLET_BAL_KEY,conn.config.OOPORTFOLIO_KEY,conn.config.OOASSET_STMT_KEY,conn.config.OOLOAN_STMT_KEY,conn.config.OOWALLET_STMT_KEY,conn.config.OOSHOP_LIST_KEY,conn.config.OOASSET_LIST_KEY,conn.config.OOPUSH_MESSAGE_KEY]
 
 
 redis_cache = RedisCache()
