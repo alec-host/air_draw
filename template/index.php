@@ -335,18 +335,12 @@ function data_handler(data){
 			btn_draw.setAttribute('style','display:none');
 			setTimeout(function(){
 				btn_details.setAttribute('style','display:');
-			},3200);
+			},3500);
 			
 		}
 	};
 	xhr.open("GET", GET_WINNER_ENDPOINT + data, true);
 	xhr.send();
-	/*
-	xhr.setRequestHeader('Content-Type', 'application/json');
-	xhr.send(JSON.stringify({
-		'tier': data
-    }));
-	*/
 }
 /*
 -.customer info.
