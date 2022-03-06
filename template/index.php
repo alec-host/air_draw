@@ -25,7 +25,7 @@ body, #tier, option{
 #outter{
 	width: 100%;
 	height: 100%;
-	background-color: #fff;
+	background-color: #00639E;
 	margin: auto;
 }
 
@@ -34,7 +34,7 @@ body, #tier, option{
 	font-size: 45px;
 	font-family: tahoma,calibri;
 	font-weight:bold;
-	#background-color: blue;
+	background-color: #FFF;
 	position: absolute;
 	top: 25%;
 	left: 40%;
@@ -226,13 +226,15 @@ a.button1:hover{
 <center>
 <div id="outter">
 	<div style="width:100%;text-align:right">
-		<a href="#" class="button1" id="reset" onclick="window.location.reload();">RESET</a>
+		<a href="#" class="button1" style="border:0.1em solid #EF822E;color:#fff;border-radius:20px;margin:10px;background-color:#EF822E;font-weight:bold" id="reset" onclick="reset_page();">RESET</a>
 	</div>
 	<div class="alert" id="message_box" style="display:none"><span id="message">&nbsp;</span></div>
+	<div style="width:100%"><img src="logo.png" alt="airduka log"></div>
 	<div id="section_holder">
 		<div class="card">
 			<br/>
 			<div id="display_holder"></div>
+			<br/>
 			<table border="0">
 				<tr>
 					<td colspan="2">&nbsp;</td>
@@ -255,7 +257,7 @@ a.button1:hover{
 					<td><a href="#" class="button1 bouncy" id="draw" onclick="run_draw();">RUN DRAW</a></td>
 				</tr>
 				<tr>
-					<td></td>
+					<td>&nbsp;</td>
 					<td><a href="#" class="button1 bouncy"id="details" style="display:none" onclick="get_customer_info();">GET DETAILS</a></td>
 				</tr>
 				<tr>
@@ -265,6 +267,7 @@ a.button1:hover{
 					<td colspan="2">&nbsp;</td>
 				</tr>
 			</table>
+			<br/>
 		</div>
 	</div>
 </div>
@@ -363,6 +366,13 @@ function data_handler_2(data){
 	};
 	xhr.open("GET", WINNER_DETAIL_ENDPOINT + data, true);
 	xhr.send();
+}
+/*
+reset page
+*/
+function reset_page() {
+	document.getElementById("tier").innerHTML = "";
+	window.location.reload();
 }
 </script>
 </html>

@@ -19,7 +19,7 @@ import uid_generator
 date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 #-.method: create customer entries.
-def _customer_payment_details(session: Session, customer_info: CreateAndUpdateCustomerEntries,_entries: int,_tier: int) -> CustomerEntriesDescription:
+def _customer_payment_details(session: Session, customer_info: CreateAndUpdateCustomerEntries,_entries: int,_tier: int,_validity_in_month: int) -> CustomerEntriesDescription:
 	customer_details = session.query(CustomerEntriesDescription.company_identifier).filter(CustomerEntriesDescription.msisdn==customer_info.msisdn)
 	if(int(customer_details.count()) == 0):
 		for i in range(_entries):
@@ -32,6 +32,7 @@ def _customer_payment_details(session: Session, customer_info: CreateAndUpdateCu
 													       amount=customer_info.amount,
 													       package=customer_info.package,
 													       tier=_tier,
+														   validity_in_month=_validity_in_month,
 													       date_created=date,
 													       date_modified=date,
 													       is_archived=0)

@@ -43,4 +43,5 @@ class AT:
 			
 		response = requests.post(conn.config.AT_ENDPOINT,data=payload,headers=headers)	
 		
+		response = None		
 		return response

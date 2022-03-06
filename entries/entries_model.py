@@ -20,4 +20,5 @@ class DrawManifestDescription(Base):
 	cost = Column(Float)
 	entries = Column(Integer)
 	tier = Column(Integer)
+	validity_in_month = Column(Integer)
 	is_deleted = Column(Integer)

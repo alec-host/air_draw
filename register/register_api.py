@@ -49,13 +49,19 @@ class CustomerEntriesAccount:
 			draw_configs = _get_entries(self.session_1,customer_info.package,customer_info.amount)
 			if(draw_configs is not None):
 				#-.method call.
-				response = _customer_payment_details(self.session_1,customer_info,draw_configs[0],draw_configs[1])
+				response = _customer_payment_details(self.session_1,customer_info,draw_configs[0],draw_configs[1],draw_configs[2])
 				if (response is not None):
 					at = AT()
-					resp = await at._send_message(customer_info.name,draw_configs[0],customer_info.msisdn)				
+					resp = await at._send_message(customer_info.name,draw_configs[0],customer_info.msisdn)			
 					return {"ERROR":"0","RESULT":"SUCCESS","MESSAGE":"Customer draw entries recorded successful."}
 				else:
-					return {"ERROR":"1","RESULT":"FAIL","MESSAGE":"Customer has existing draw entries."}
+					#-.handle month renewal package.
+					if(int(draw_configs[2]) == 1):
+						at = AT()
+						resp = await at._send_message(customer_info.name,draw_configs[0],customer_info.msisdn)							
+						return {"ERROR":"0","RESULT":"SUCCESS","MESSAGE":"Customer draw entries recorded successful."}
+					else:
+						return {"ERROR":"1","RESULT":"FAIL","MESSAGE":"Customer has existing draw entries."}
 			else:
 				return {"ERROR":"1","RESULT":"FAIL","MESSAGE":"Something wrong happened. Check tbl_draw_manifest"}
 		except Exception as ex:

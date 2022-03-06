@@ -25,6 +25,7 @@ class CustomerEntriesDescription(Base):
 	amount = Column(Float)
 	package = Column(String)
 	tier = Column(String)
+	validity_in_month = Column(String)
 	date_created = Column(DateTime)
 	date_modified = Column(DateTime)
 	is_archived = Column(Integer)

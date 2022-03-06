@@ -6,7 +6,7 @@ import uuid
 
 from datetime import datetime
 
-from sqlalchemy import or_,desc
+from sqlalchemy import or_,desc,func
 from sqlalchemy.orm import Session
 
 import conn.config
@@ -18,8 +18,8 @@ date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 #-.method: get entries based on package.
 def _get_entries(session: Session,_package,_amount):
-	draw_entries = session.query(DrawManifestDescription.entries,DrawManifestDescription.tier).filter_by(package=_package,cost=_amount).first()
+	draw_entries = session.query(DrawManifestDescription.entries,DrawManifestDescription.tier,DrawManifestDescription.period_in_months).where(func.lower(DrawManifestDescription.package)==_package.lower(),DrawManifestDescription.cost==_amount).first()
 	if(draw_entries is None):
 		return None
 	else:
-		return draw_entries['entries'],draw_entries['tier']
+		return draw_entries['entries'],draw_entries['tier'],draw_entries['period_in_months']
