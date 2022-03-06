@@ -57,11 +57,15 @@ class CustomerEntriesAccount:
 				else:
 					#-.handle month renewal package.
 					if(int(draw_configs[2]) == 1):
-						at = AT()
-						resp = await at._send_message(customer_info.name,draw_configs[0],customer_info.msisdn)							
-						return {"ERROR":"0","RESULT":"SUCCESS","MESSAGE":"Customer draw entries recorded successful."}
+						response = _customer_payment_details(self.session_1,customer_info,draw_configs[0],draw_configs[1],draw_configs[2])
+						if (response is not None):
+							at = AT()
+							resp = await at._send_message(customer_info.name,draw_configs[0],customer_info.msisdn)							
+							return {"ERROR":"0","RESULT":"SUCCESS","MESSAGE":"Customer draw entries recorded successful."}
+						else:
+							return {"ERROR":"1","RESULT":"FAIL","MESSAGE":"Customer has existing draw entries."}
 					else:
-						return {"ERROR":"1","RESULT":"FAIL","MESSAGE":"Customer has existing draw entries."}
+						return {"ERROR":"1","RESULT":"FAIL","MESSAGE":"No entries for active package with validity of 3+ months."}
 			else:
 				return {"ERROR":"1","RESULT":"FAIL","MESSAGE":"Something wrong happened. Check tbl_draw_manifest"}
 		except Exception as ex:

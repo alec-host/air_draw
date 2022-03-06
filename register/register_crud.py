@@ -20,7 +20,7 @@ date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 #-.method: create customer entries.
 def _customer_payment_details(session: Session, customer_info: CreateAndUpdateCustomerEntries,_entries: int,_tier: int,_validity_in_month: int) -> CustomerEntriesDescription:
-	customer_details = session.query(CustomerEntriesDescription.company_identifier).filter(CustomerEntriesDescription.msisdn==customer_info.msisdn)
+	customer_details = session.query(CustomerEntriesDescription.company_identifier).where(CustomerEntriesDescription.msisdn==customer_info.msisdn,CustomerEntriesDescription.validity_in_month!=1)
 	if(int(customer_details.count()) == 0):
 		for i in range(_entries):
 			new_customer_info = CustomerEntriesDescription(company_name=customer_info.company_name,
