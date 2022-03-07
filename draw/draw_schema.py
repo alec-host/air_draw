@@ -20,7 +20,7 @@ class CreateAndUpdateDrawFinalPoolEntries(BaseModel):
 		orm_mode = True
 		
 class DrawFinalPoolEntries(CreateAndUpdateDrawFinalPoolEntries):
-    _id: int
+	_id: int
 	
 	class Config:
 		orm_mode = True
