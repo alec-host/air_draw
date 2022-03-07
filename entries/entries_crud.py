@@ -18,8 +18,16 @@ date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 #-.method: get entries based on package.
 def _get_entries(session: Session,_package,_amount):
-	draw_entries = session.query(DrawManifestDescription.entries,DrawManifestDescription.tier,DrawManifestDescription.period_in_months).where(func.lower(DrawManifestDescription.package)==_package.lower(),DrawManifestDescription.cost==_amount).first()
-	if(draw_entries is None):
-		return None
-	else:
-		return draw_entries['entries'],draw_entries['tier'],draw_entries['period_in_months']
+	try:
+		draw_entries = session.query(DrawManifestDescription.entries,DrawManifestDescription.tier,DrawManifestDescription.period_in_months).where(func.lower(DrawManifestDescription.package)==_package.lower(),DrawManifestDescription.cost==_amount).first()
+		if(draw_entries is None):
+			return None
+		else:
+			return draw_entries['entries'],draw_entries['tier'],draw_entries['period_in_months']
+	except Exception as ex:
+		logger.debug(ex)
+		raise ex
+	finally:
+		session.close()
+		
+	
