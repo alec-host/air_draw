@@ -43,6 +43,7 @@ app.add_middleware(
 app.include_router(register_api.register_router)
 app.include_router(draw_api.draw_router)
 
+
 @app.get('/')
 def root_api():
         return {"message":"airduka.com"}

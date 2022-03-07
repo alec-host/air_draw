@@ -19,7 +19,7 @@ class AT:
 		else:
 			_first_name = "User"
 		
-		if(int(_entries) > 0):
+		if(int(_entries) > 1):
 			inner_text = "entries"
 		else:
 			inner_text = "entry"
