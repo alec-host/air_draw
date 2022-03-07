@@ -6,9 +6,10 @@ import uvicorn
 
 import logging
 
-from fastapi import FastAPI
+from fastapi import FastAPI,Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from fastapi.responses import JSONResponse
 
 from logging.config import dictConfig
 from log_config import LogConfig
@@ -45,6 +46,13 @@ app.include_router(draw_api.draw_router)
 @app.get('/')
 def root_api():
         return {"message":"airduka.com"}
+
+@app.exception_handler(ValueError)
+async def value_error_exception_handler(request: Request, exc: ValueError):
+    return JSONResponse(
+        status_code=400,
+        content={"message": str(exc)},
+    )
 
 if __name__ == "__main__":
     uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=True, log_level="info")

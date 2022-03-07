@@ -20,7 +20,7 @@ from conn.redis_wrapper import RedisCache
 
 from sms.at_sms import AT
 
-redis_cache = RedisCache()
+#redis_cache = RedisCache()
 register_router = APIRouter()
 
 db_mgt_1 = DatabaseManager(conn.config.MYSQL_DBASE)

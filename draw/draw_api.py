@@ -16,7 +16,7 @@ from conn.redis_wrapper import RedisCache
 
 import conn.config
 
-redis_cache = RedisCache()
+#redis_cache = RedisCache()
 draw_router = APIRouter()
 
 db_mgt_1 = DatabaseManager(conn.config.MYSQL_DBASE)
