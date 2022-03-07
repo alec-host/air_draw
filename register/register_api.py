@@ -69,6 +69,7 @@ class CustomerEntriesAccount:
 			else:
 				return {"ERROR":"1","RESULT":"FAIL","MESSAGE":"Something wrong happened. Check tbl_draw_manifest"}
 		except Exception as ex:
+			return ex
 			raise HTTPException(**ex.__dict__)
 			
 	#-.get customer draw entries.
@@ -86,4 +87,5 @@ class CustomerEntriesAccount:
 				#return {"ERROR":"1","RESULT":"FAIL","MESSAGE":"No customer entries."}
 				return {"Result":"OK","Records":[],"TotalRecordCount":0}
 		except Exception as ex:
+			return ex
 			raise HTTPException(**ex.__dict__)

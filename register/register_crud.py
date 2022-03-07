@@ -3,6 +3,7 @@
 '''
 import sys
 import uuid
+import logging
 
 from datetime import datetime
 
@@ -16,34 +17,44 @@ import conn.config
 sys.path.insert(0,conn.config.UTILITY_DIR)
 import uid_generator
 
+logger = logging.getLogger(__name__)
+
 date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 #-.method: create customer entries.
 def _customer_payment_details(session: Session, customer_info: CreateAndUpdateCustomerEntries,_entries: int,_tier: int,_validity_in_month: int) -> CustomerEntriesDescription:
-	customer_details = session.query(CustomerEntriesDescription.company_identifier).where(CustomerEntriesDescription.msisdn==customer_info.msisdn,CustomerEntriesDescription.validity_in_month!=1)
-	if(int(customer_details.count()) == 0):
-		for i in range(_entries):
-			new_customer_info = CustomerEntriesDescription(company_name=customer_info.company_name,
-														   company_identifier=customer_info.company_identifier,
-													       name=customer_info.name,
-													       email=customer_info.email,
-													       msisdn=customer_info.msisdn,
-													       ticket_no='AD_'+uid_generator.get_custom_alpha_uid()+'O',
-													       amount=customer_info.amount,
-													       package=customer_info.package,
-													       tier=_tier,
-														   validity_in_month=_validity_in_month,
-													       date_created=date,
-													       date_modified=date,
-													       is_archived=0)
+	try:
+		customer_details = session.query(CustomerEntriesDescription.company_identifier).where(CustomerEntriesDescription.msisdn==customer_info.msisdn,CustomerEntriesDescription.validity_in_month!=1)
+		if(int(customer_details.count()) == 0):
+			for i in range(_entries):
+				new_customer_info = CustomerEntriesDescription(company_name=customer_info.company_name,
+															   company_identifier=customer_info.company_identifier,
+															   name=customer_info.name,
+															   email=customer_info.email,
+															   msisdn=customer_info.msisdn,
+															   ticket_no='AD_'+uid_generator.get_custom_alpha_uid()+'O',
+															   amount=customer_info.amount,
+															   package=customer_info.package,
+															   tier=_tier,
+															   validity_in_month=_validity_in_month,
+															   date_created=date,
+															   date_modified=date,
+															   is_archived=0)
 
-			session.add(new_customer_info)
-			session.commit()
-			session.refresh(new_customer_info)
-			
-		new_customer_info=1
-	else:
-		new_customer_info=None
+				session.add(new_customer_info)
+				session.commit()
+				session.refresh(new_customer_info)
+				
+			new_customer_info=1
+			logger.info(new_customer_info)
+		else:
+			new_customer_info=None
+	except Exception as ex:
+		logger.debug(ex)
+		raise ex
+		
+	finally:
+		session.close()
 	
 	return new_customer_info
 	

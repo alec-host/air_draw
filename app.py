@@ -3,9 +3,18 @@
 """
 import sys
 import uvicorn
+
+import logging
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+
+from logging.config import dictConfig
+from log_config import LogConfig
+
+dictConfig(LogConfig().dict())
+logger = logging.getLogger("airduka_lotto")
 
 import conn.config
 
@@ -38,4 +47,4 @@ def root_api():
         return {"message":"airduka.com"}
 
 if __name__ == "__main__":
-    uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=False, log_level="info")
+    uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=True, log_level="info")
