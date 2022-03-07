@@ -4,15 +4,16 @@ CREATE THE FOLLOWING SCHEMAS
 
 CREATE TABLE `tbl_customer_entries` (
 	`_Id` INT(10) NOT NULL AUTO_INCREMENT,
-	`company_name` VARCHAR(25) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
-	`company_identifier` VARCHAR(25) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
-	`name` VARCHAR(25) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
+	`company_name` VARCHAR(250) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
+	`company_identifier` VARCHAR(250) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
+	`name` VARCHAR(50) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
 	`msisdn` VARCHAR(15) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
-	`email` VARCHAR(25) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
+	`email` VARCHAR(45) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
 	`ticket_no` VARCHAR(12) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
 	`amount` DOUBLE(7,2) NULL DEFAULT NULL,
 	`package` VARCHAR(50) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
 	`tier` VARCHAR(50) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
+	`validity_in_month` VARCHAR(1) NULL DEFAULT '0' COLLATE 'latin1_swedish_ci',
 	`date_created` DATETIME NULL DEFAULT NULL,
 	`date_modified` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
 	`is_archived` INT(1) NULL DEFAULT '0',
@@ -24,6 +25,7 @@ CREATE TABLE `tbl_customer_entries` (
 COLLATE='latin1_swedish_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=0;
+
 
 ===================================================================================
 
@@ -49,6 +51,7 @@ CREATE TABLE `tbl_draw_manifest` (
 	`package` VARCHAR(20) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
 	`cost` DOUBLE(7,2) NULL DEFAULT '0.00',
 	`entries` INT(3) NULL DEFAULT '0',
+	`tier` INT(1) NULL DEFAULT '0',
 	`is_deleted` INT(1) NULL DEFAULT '0',
 	PRIMARY KEY (`_id`) USING BTREE,
 	INDEX `period_in_months` (`period_in_months`) USING BTREE,
@@ -80,6 +83,6 @@ CREATE TRIGGER
 
 CREATE DEFINER=`root`@`localhost` TRIGGER `tbl_customer_entries_after_insert` AFTER INSERT ON `tbl_customer_entries` FOR EACH ROW BEGIN
 	IF(NEW.msisdn IS not NULL && NEW.ticket_no IS not NULL) THEN
-		INSERT INTO `tbl_draw_entries` (`msisdn`,`name`,`ticket_no`,`tier`) VALUES (NEW.msisdn,NEW.name,NEW.ticket_no,NEW.tier);
+		INSERT INTO `tbl_draw_entries` (`msisdn`,`name`,`ticket_no`,`tier`,`validity_in_month`) VALUES (NEW.msisdn,NEW.name,NEW.ticket_no,NEW.tier,NEW.validity_in_month);
 	END IF;
 END
