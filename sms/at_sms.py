@@ -23,8 +23,10 @@ class AT:
 			inner_text = "entries"
 		else:
 			inner_text = "entry"
-			
+		"""	
 		message = conn.config.TEMPLATE_MESSAGE.replace('{0}',str(_first_name)).replace('{1}',str(_entries)).replace('{2}',inner_text)
+		"""
+		message = conn.config.TEMPLATE_MESSAGE.replace('{0}',str(_first_name))
 	
 		headers = {
 			'apiKey' : conn.config.AT_SMS_KEY,
