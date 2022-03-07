@@ -42,6 +42,9 @@ class CreateAndUpdateDrawManifest(BaseModel):
 class SearchValidationStub(BaseModel):
 	search: str
 	
+	class Config:
+		orm_mode = True
+	
 class UserCustomerEntries(CreateAndUpdateCustomerEntries):
     msisdn: str
 

@@ -15,15 +15,24 @@ class CreateAndUpdateDrawFinalPoolEntries(BaseModel):
 	msisdn: str
 	ticket_no: str
 	tier: Optional[int] = 0
+	
+	class Config:
+		orm_mode = True
 		
 class DrawFinalPoolEntries(CreateAndUpdateDrawFinalPoolEntries):
     _id: int
+	
+	class Config:
+		orm_mode = True
 
 class CreateAndUpdateDrawWinners(BaseModel):
 	msisdn: str
 	name: str
 	ticket_no: str
 	tier: Optional[int] = 0
+	
+	class Config:
+		orm_mode = True
 
 class DrawWinners(CreateAndUpdateDrawWinners):
     _id: int
