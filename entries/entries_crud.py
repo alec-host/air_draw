@@ -4,6 +4,8 @@
 import sys
 import uuid
 
+import logging
+
 from datetime import datetime
 
 from sqlalchemy import or_,desc,func
@@ -13,6 +15,8 @@ import conn.config
 sys.path.insert(0,conn.config.ENTRIES_DIR)
 from entries_schema import CreateAndUpdateDrawEntries
 from entries_model import DrawManifestDescription
+
+logger = logging.getLogger(__name__)
 
 date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
