@@ -18,6 +18,8 @@ class CreateAndUpdateDrawEntries(BaseModel):
 	entries: Optional[int] = 0
 	is_deleted: Optional[int] = 0
 	
+	class Config:
+		orm_mode = True	
 	
 class DrawEntries(CreateAndUpdateDrawEntries):
     _id: int

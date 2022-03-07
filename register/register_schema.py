@@ -20,9 +20,13 @@ class CreateAndUpdateCustomerEntries(BaseModel):
 	amount: Optional[float] = 0.00
 	package: str
 	tier: Optional[str] = 0
+	validity_in_month: Optional[str] = '0'
 	date_created: Optional[str] = date
 	date_modified: Optional[str] = date
 	is_archived: Optional[int] = 0
+	
+	class Config:
+		orm_mode = True
 	
 class CreateAndUpdateDrawManifest(BaseModel):
 	period_in_months: str
@@ -31,6 +35,9 @@ class CreateAndUpdateDrawManifest(BaseModel):
 	entries: Optional[int] = 0
 	tier: Optional[int] = 0
 	is_deleted: Optional[int] = 0
+
+	class Config:
+		orm_mode = True
 	
 class SearchValidationStub(BaseModel):
 	search: str
