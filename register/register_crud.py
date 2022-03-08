@@ -5,7 +5,8 @@ import sys
 import uuid
 import logging
 
-from datetime import datetime
+import pytz
+import datetime
 
 from sqlalchemy import or_,desc
 from sqlalchemy.orm import Session
@@ -19,7 +20,18 @@ import uid_generator
 
 logger = logging.getLogger(__name__)
 
-date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+zone = pytz.timezone("Africa/Nairobi")
+my_time_zone = zone.localize(datetime.datetime.now(),is_dst=True)
+
+local_now = datetime.datetime.now().astimezone()
+local_tz = local_now.tzinfo
+local_tzname = local_tz.tzname(local_now)
+
+if(local_tzname != 'E. Africa Standard Time'):
+	EAT = my_time_zone + datetime.timedelta(hours = 3)
+	date = EAT.strftime('%Y-%m-%d %H:%M:%S')
+else:
+	date = my_time_zone.strftime('%Y-%m-%d %H:%M:%S')
 
 #-.method: create customer entries.
 def _customer_payment_details(session: Session, customer_info: CreateAndUpdateCustomerEntries,_entries: int,_tier: int,_validity_in_month: int) -> CustomerEntriesDescription:
